@@ -154,7 +154,7 @@ function Chatbot() {
       <form onSubmit={(e) => e.preventDefault()}>
         <div>
           <textarea
-            className="input-box"
+            className="input-box chat-input"
             placeholder="Message agent..."
             value={userQuery}
             onChange={(e) => setUserQuery(e.target.value)}
