@@ -11,7 +11,7 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  padding-top: 0px;
+  padding: 0;
 }
 
 a {
@@ -58,22 +58,31 @@ button:focus-visible {
 }
 
 .chat-app-wrapper {
-  width: 850px;
-  height: 100vh;
+  width: 100%;
+  position: sticky;
 }
+
 .title-section {
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 }
 .title-section h2 {
+  font-size: 18px;
+  line-height: 18px;
   margin-bottom: 5px;
+  margin-top: 10px;
+}
+
+.title-section .title-first-letter {
+  font-size: 25px;
 }
 .title-section p {
-  margin-top: 5px;
+  font-size: 12px;
+  margin-top: 0px;
 }
 
 .chat-message-box {
   box-sizing: border-box;
-  height: 750px;
+  height: 75vh; /* Set to 75% of the viewport height */
   overflow-y: auto;
   overflow-x: hidden;
   border: 1px solid #42424b;
@@ -85,13 +94,30 @@ button:focus-visible {
 }
 
 .chat-message {
-  margin: 15px 10px;
+  margin: 10px 10px;
   background-color: rgb(198, 230, 248);
   color: black;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   text-align: left;
-  padding: 20px 50px;
+  padding: 15px 40px;
   font-size: 14px;
+  width: 400px;
+}
+.chat-message ul {
+  font-size: 12px;
+}
+.chat-message .sender {
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+.chat-message .timestamp {
+  font-size: 0.5em;
+  font-weight: light;
+}
+
+.chat-message .header {
+  margin-bottom: 8px;
 }
 
 .pending {
@@ -106,11 +132,49 @@ button:focus-visible {
 .send-btn {
   margin-right: 10px;
 }
-
-.input-box {
-  height: 60px;
+.chat-form {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  height: 80px;
+}
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
   width: 350px;
   margin-top: 10px;
+  background-color: #dce8ff;
+  box-sizing: border-box;
+}
+
+textarea.input-box {
+  height: 300px;
+  border: none;
+  resize: none;
+  font-size: 12px;
+}
+
+.msg-btn-section {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: end;
+  padding-right: 5px;
+  background-color: #ffffff;
+}
+
+.msg-btn {
+  padding: 2px;
+  font-size: 10px;
+  font-weight: normal;
+  border-radius: 0;
+}
+
+.msg-btn.send {
+  /* margin-right: 5px; */
+}
+
+.msg-btn.clear {
 }
 
 @media (prefers-color-scheme: light) {

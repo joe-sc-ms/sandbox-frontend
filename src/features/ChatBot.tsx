@@ -1,33 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import MarkdownRenderer from "../components/MarkdownRenderer";
-
-enum SENDER {
-  AGENT = "agent",
-  USER = "user",
-}
-
-type Message = {
-  text: string;
-  sender: SENDER;
-  time: string;
-};
-
-const testMessages = [
-  {
-    text: "how many assets are available today to reserve?",
-    sender: SENDER.USER,
-    time: "6:41:40 AM",
-  },
-  {
-    text: "There are three assets available for reservation today:\n\n1. **mock-asset-9qdum**\n   - System RAM: 800 GB\n   - Local Disk: 7000 GB\n   - CPU: GenuineIntel\n   - GPU: 2x Titan V\n   - Location: Redmond Ridge\n   - OS: Ubuntu 22.04 LTS\n\n2. **mock-asset-xpty5**\n   - System RAM: 64 GB\n   - Local Disk: 1000 GB\n   - CPU: Intel Xeon E5-2673 v3 2.40GHz (2 Procs)\n   - GPU: None\n   - Location: West US 2\n   - OS: Ubuntu 22.04 LTS\n\n3. **mock-asset-q6ohw**\n   - System RAM: 800 GB\n   - Local Disk: 7000 GB\n   - CPU: GenuineIntel\n   - GPU: Titan V\n   - Location: Redmond Ridge\n   - OS: Ubuntu 22.04 LTS\n\nAll of these assets are not restricted and have no reserved dates, meaning they are available for immediate reservation.",
-    sender: SENDER.AGENT,
-    time: "6:42:40 AM",
-  },
-];
+import { Message, SENDER, SEARCH_URL, defaultMessages } from "../constants";
+import { createMessage } from "../utils";
 
 function Chatbot() {
   const [userQuery, setUserQuery] = useState("");
-  const [messages, setMessages] = useState<Message[]>(testMessages);
+  const [messages, setMessages] = useState<Message[]>(defaultMessages);
   const [pending, setPending] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -44,21 +22,11 @@ function Chatbot() {
     console.log(messages);
   }, [messages]);
 
-  const createMessage = (user: SENDER, text: string) => {
-    return {
-      sender: user,
-      text: text,
-      time: new Date().toLocaleString(),
-    };
-  };
-
   const handleSend = async () => {
     const newMessage = createMessage(SENDER.USER, userQuery);
     setMessages([...messages, newMessage]);
     setUserQuery("");
 
-    const SEARCH_URL =
-      import.meta.env.VITE_API_URL + import.meta.env.VITE_API_AISEARCH; //"http://localhost:7071/api/AssetSearchAgent";
     console.log("search url", SEARCH_URL);
     try {
       setPending(true);
@@ -121,18 +89,14 @@ function Chatbot() {
     };
   }, [userQuery]);
 
-  const titleStyle = {
-    fontSize: ".8em",
-    fontWeight: "bold",
-  };
-
-  const dateStyle = {
-    fontSize: ".5em",
-    fontWeight: "light",
-  };
-
   return (
-    <div>
+    <div className="chat-app-wrapper">
+      <div className="title-section">
+        <h2>Research Asset Guide</h2>
+        <p>
+          An AI agent to help find compute resources for your research needs.
+        </p>
+      </div>
       <div className="chat-message-box">
         {messages.map((msg, index) => (
           <div
@@ -142,38 +106,43 @@ function Chatbot() {
             }
             ref={index === messages.length - 1 ? messagesEndRef : null}
           >
-            <span style={titleStyle}>{msg.sender.toUpperCase()}:</span>
-            <div style={dateStyle}>{msg.time}</div>
-            <MarkdownRenderer content={msg.text} />
+            <div className="header">
+              <span className="sender">{msg.sender.toUpperCase()}:</span>
+              <div className="timestamp">{msg.time}</div>
+            </div>
+
+            <div className="message">
+              <MarkdownRenderer content={msg.text} />
+            </div>
           </div>
         ))}
         {pending && (
           <div className="chat-message pending">Retrieving answer...</div>
         )}
       </div>
-      <form onSubmit={(e) => e.preventDefault()}>
-        <div>
+      <form onSubmit={(e) => e.preventDefault()} className="chat-form">
+        <div className="input-wrapper">
           <textarea
-            className="input-box chat-input"
+            className="input-box"
             placeholder="Message agent..."
             value={userQuery}
             onChange={(e) => setUserQuery(e.target.value)}
-            style={{ marginBottom: "8px", padding: "20px" }}
+            rows={5}
           />
-        </div>
-
-        <div>
-          <button onClick={handleSend} className="send-btn">
-            Send
-          </button>
-          <button
-            onClick={() => {
-              setMessages([]);
-              setPending(false);
-            }}
-          >
-            Clear
-          </button>
+          <div className="msg-btn-section">
+            <button onClick={handleSend} className="msg-btn send">
+              Send
+            </button>
+            {/* <button
+                className="msg-btn clear"
+                onClick={() => {
+                  setMessages([]);
+                  setPending(false);
+                }}
+              >
+                Clear
+              </button> */}
+          </div>
         </div>
       </form>
     </div>
