@@ -13,4 +13,5 @@ export const filterAssetList = (text: string): string[] => {
   if (text.includes(sectionStart)) {
     return text.split(sectionStart);
   }
+  return [text];
 };
