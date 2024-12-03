@@ -31,3 +31,5 @@ export const defaultMessages = [createMessage(ROLE.ASSISTANT, greeting)];
 
 export const SEARCH_URL =
   "https://vjchildress-test-aicalls.azurewebsites.net/api/AssetSearchAgent";
+
+export const SEARCH_URL_LOCAL = "http://localhost:7071/api/AssetSearchAgent";
