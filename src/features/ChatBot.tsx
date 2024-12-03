@@ -1,7 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import MarkdownRenderer from "../components/MarkdownRenderer";
-import { Message, ROLE, SEARCH_URL, defaultMessages } from "../constants";
-import { createMessage, filterAssetList } from "../utils";
+import {
+  Message,
+  ROLE,
+  SEARCH_URL,
+  defaultMessages,
+  SEARCH_URL_LOCAL,
+} from "../constants";
+import { checkParam, createMessage, filterAssetList } from "../utils";
 import { Progress } from "@nextui-org/progress";
 
 function Chatbot() {
@@ -30,15 +36,19 @@ function Chatbot() {
     console.log("hostList", hostList);
   }, [hostList]);
 
+  console.log("search url", SEARCH_URL);
+  console.log("use local url? ", checkParam("local"));
+  const url = checkParam("local") ? SEARCH_URL_LOCAL : SEARCH_URL;
+  console.log("url ", url);
+
   const handleSend = useCallback(async () => {
     const newMessage = createMessage(ROLE.USER, userQuery);
     setMessageList([...messageList, newMessage]);
     setUserQuery("");
 
-    console.log("search url", SEARCH_URL);
     try {
       setPending(true);
-      const response = await fetch(SEARCH_URL, {
+      const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
