@@ -13,5 +13,10 @@ export const filterAssetList = (text: string): string[] => {
   if (text.includes(sectionStart)) {
     return text.split(sectionStart);
   }
-  return [];
+  return [text];
+};
+
+export const checkParam = (query: string): boolean => {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.has(query);
 };
