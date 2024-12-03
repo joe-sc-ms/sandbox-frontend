@@ -19,3 +19,4 @@ export const filterAssetList = (text: string): string[] => {
 export const checkParam = (query: string): boolean => {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.has(query);
+};
