@@ -20,7 +20,7 @@ function Chatbot() {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messageList]); // 'messages' is your state variable containing chat messages
+  }, [messageList]);
 
   useEffect(() => {
     console.log("messageList", messageList);
@@ -38,17 +38,13 @@ function Chatbot() {
     console.log("search url", SEARCH_URL);
     try {
       setPending(true);
-      const response = await fetch(
-        import.meta.env.DEV ? import.meta.env.VITE_API_URL_LOCAL : SEARCH_URL,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          // body: JSON.stringify({ role: "user", query: userQuery }),
-          body: JSON.stringify({ messages: [...messageList, newMessage] }),
-        }
-      );
+      const response = await fetch(SEARCH_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ messages: [...messageList, newMessage] }),
+      });
       console.log("response: ", response);
 
       if (!response.ok) {
@@ -92,7 +88,7 @@ function Chatbot() {
     } catch (error) {
       console.error("Error:", error);
     }
-  }, [messageList, userQuery]);
+  }, [hostList, messageList, userQuery]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -120,7 +116,6 @@ function Chatbot() {
 
   return (
     <div className="chat-app-wrapper">
-      {import.meta.env.DEV ? "devmode" : "not dev mode"}
       <div className="title-section">
         <h2>Research Asset Guide</h2>
         <p>
