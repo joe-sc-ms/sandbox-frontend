@@ -177,6 +177,27 @@ textarea.input-box {
 .msg-btn.clear {
 }
 
+.chat-actions {
+  margin-top: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 490px;
+  margin-top: 15px 10px 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  gap: 5px;
+  bottom: 0;
+}
+.host-buttons {
+  border: 1px solid lightblue;
+  font-size: 10px;
+  font-weight: 300;
+  padding: 5px;
+  border-radius: 0;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
