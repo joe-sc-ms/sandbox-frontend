@@ -20,3 +20,8 @@ export const checkParam = (query: string): boolean => {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.has(query);
 };
+
+export function capFirstLetter(str: string): string {
+  if (!str) return str;
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}

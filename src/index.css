@@ -1,11 +1,14 @@
 :root {
+  --primary-background-color: #3c3434;
+  --primary-background-light: #f3f1f1;
+
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #3c3434;
+  background-color: var(--primary-background-color);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -29,7 +32,7 @@ body {
   /* place-items: center; */
   min-width: 320px;
   min-height: 100vh;
-  background-color: #3c3434;
+  background-color: var(--primary-background-color);
   color: rgb(214, 214, 214);
 }
 
@@ -38,7 +41,7 @@ h1 {
   line-height: 1.1;
 }
 
-button {
+/* button {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -55,29 +58,33 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
+} */
 
 .chat-app-wrapper {
   width: 100%;
   position: sticky;
 }
 
-.title-section {
-  margin-bottom: 15px;
+.title-section-wrapper {
+  padding: 5px 0px 0px;
+  text-align: center;
+  background-color: var(--primary-background-color);
+  color: var(--primary-background-light);
 }
-.title-section h2 {
+.title-section-wrapper h2 {
   font-size: 18px;
   line-height: 18px;
   margin-bottom: 5px;
   margin-top: 10px;
 }
 
-.title-section .title-first-letter {
+.title-section-wrapper .title-first-letter {
   font-size: 25px;
 }
-.title-section p {
+.title-section-wrapper p {
   font-size: 12px;
-  margin-top: 0px;
+  margin: 0px;
+  padding-bottom: 15px;
 }
 
 .chat-message-box {
@@ -117,12 +124,74 @@ button:focus-visible {
 }
 
 .chat-message .header {
-  margin-bottom: 8px;
+  /* margin-bottom: 8px; */
 }
 
-.pending {
-  background-color: rgb(234 235 238);
-  color: rgb(35, 35, 35);
+.chat-message .message p {
+  margin-top: 4px;
+}
+
+.chat-message.pending {
+  background-color: #f7f7fa;
+  box-shadow: none;
+}
+
+.data-view {
+  margin: 5px 10px;
+  font-size: 14px;
+  /* width: 100%; */
+  /* box-sizing: border-box; */
+  width: 800px;
+  box-sizing: border-box;
+  height: 75vh;
+  overflow: auto;
+}
+
+.data-view .title {
+  font-weight: 500;
+  margin-bottom: ;
+}
+.data-view .data-box {
+  width: 100%;
+  box-sizing: border-box; /* Allows text to wrap normally */
+  font-size: 10px;
+  padding: 5px 20px;
+}
+.data-view .data-box .state-message,
+.data-view .data-box .state-response {
+  border-bottom: 1px solid rgb(164, 167, 168);
+}
+
+.data-view .data-box .state-message span,
+.data-view .data-box .state-response span {
+  overflow-wrap: break-word; /* Allows long words to break */
+  word-break: break-word; /* Ensures words break at the end of the line */
+  white-space: normal; /* Allows text to wrap normally */
+}
+
+.data-view .data-box .state-response span.__json-key__,
+.data-view .data-box .state-response span.__json-string__,
+.data-view .data-box .state-response span.description-content,
+.data-view .data-box .state-response span.__json-pretty__ {
+  overflow-wrap: break-word; /* Allows long words to break */
+  word-break: break-word; /* Ensures words break at the end of the line */
+  white-space: normal; /* Allows text to wrap normally */
+}
+
+.data-view .data-box .state-response span.__json-key__,
+.data-view .data-box .state-message span.__json-key__ {
+  font-weight: 600;
+}
+
+/* Target the specific span containing the description key */
+.data-view
+  .data-box
+  .state-response
+  span.__json-key__:contains("description")
+  + span.__json-string__ {
+  overflow-wrap: break-word; /* Allows long words to break */
+  word-break: break-word; /* Ensures words break at the end of the line */
+  white-space: normal; /* Allows text to wrap normally */
 }
 
 .ai-message {
@@ -137,6 +206,7 @@ button:focus-visible {
   display: flex;
   justify-content: center;
   height: 80px;
+  background-color: var(--primary-background-color);
 }
 .input-wrapper {
   display: flex;
@@ -152,29 +222,39 @@ textarea.input-box {
   border: none;
   resize: none;
   font-size: 12px;
+  padding: 5px;
 }
 
 .msg-btn-section {
   width: 100%;
   box-sizing: border-box;
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
   padding-right: 5px;
   background-color: #ffffff;
 }
 
 .msg-btn {
   padding: 2px;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: normal;
-  border-radius: 0;
+  border: none;
+  cursor: pointer;
+}
+.msg-btn:hover {
+  background-color: #eefbf4;
 }
 
 .msg-btn.send {
-  /* margin-right: 5px; */
+  font-weight: 500;
 }
 
 .msg-btn.clear {
+  color: #aeaeae;
+}
+
+.msg-btn.clear:hover {
+  background-color: #f8ebdb;
 }
 
 .chat-actions {
@@ -196,6 +276,36 @@ textarea.input-box {
   font-weight: 300;
   padding: 5px;
   border-radius: 0;
+  cursor: pointer;
+  color: #1797c3;
+}
+
+.host-buttons:hover {
+  border: 1px solid lightblue;
+  font-weight: 500;
+  color: #106f8e;
+  background-color: #dff0f5;
+}
+
+.admin-controls {
+  padding-top: 15px;
+  background-color: var(--primary-background-color);
+}
+
+.admin-controls button {
+  padding: 5px 5px;
+  background-color: var(--primary-background-color);
+  color: #868181;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.admin-controls button.selected {
+  border-color: #106f8e;
+}
+
+.admin-controls button:hover {
+  color: #c5c1c1;
 }
 
 @media (prefers-color-scheme: light) {
