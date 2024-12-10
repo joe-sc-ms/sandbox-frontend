@@ -68,7 +68,8 @@ function Chatbot() {
     const newMessage = createMessage(ROLE.USER, userQuery);
     setMessageList([...messageList, newMessage]);
     setUserQuery("");
-
+    // const userInfo = " | user_id:42";
+    // newMessage.content = newMessage.content + userInfo;
     try {
       setPending(true);
       const response = await fetch(environmentUrl, {
@@ -76,7 +77,9 @@ function Chatbot() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ messages: [...messageList, newMessage] }),
+        body: JSON.stringify({
+          messages: [...messageList, newMessage],
+        }),
       });
       console.log("response: ", response);
 
